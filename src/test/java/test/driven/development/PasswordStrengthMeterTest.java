@@ -20,23 +20,48 @@ public class PasswordStrengthMeterTest {
 
     @Test
     void meetsOthersCriteria_except_for_Length_Then_Normal() {
-        assertStrength("ab12!@A",PasswordStrength.NORMAL);
-        assertStrength("AB12!c",PasswordStrength.NORMAL);
+        assertStrength("ab12!@A", PasswordStrength.NORMAL);
+        assertStrength("AB12!c", PasswordStrength.NORMAL);
 
     }
 
     @Test
     void meetsOthersCriteria_except_for_number_Then_Normal() {
-        assertStrength("ab!@ABqwer",PasswordStrength.NORMAL);
+        assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
     }
 
     @Test
-    void nullInput_Then_Invalid(){
+    void nullInput_Then_Invalid() {
         assertStrength(null, PasswordStrength.INVALID);
     }
 
     @Test
-    void emptyInput_Then_Invalid(){
-        assertStrength("",PasswordStrength.INVALID);
+    void emptyInput_Then_Invalid() {
+        assertStrength("", PasswordStrength.INVALID);
+    }
+
+    @Test
+    void meetsOtherCriteria_except_for_Uppercase_then_Normal() {
+        assertStrength("ab12!@df", PasswordStrength.NORMAL);
+    }
+
+    @Test
+    void meetsOnlyLengthCriteria_Then_Weak(){
+        assertStrength("abdefghi",PasswordStrength.WEAK);
+    }
+
+    @Test
+    void meetsOnlyNumCriteria_Then_Weak(){
+        assertStrength("12345",PasswordStrength.WEAK);
+    }
+
+    @Test
+    void meetsOnlyUpperCriteria_Then_Weak(){
+        assertStrength("ABZEF", PasswordStrength.WEAK);
+    }
+
+    @Test
+    void meetsNoCriteria_Then_Weak(){
+        assertStrength("abc", PasswordStrength.WEAK);
     }
 }
